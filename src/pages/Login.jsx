@@ -13,10 +13,6 @@ const Login = () => {
     //write your cleanup code here;
   }, []);
 
-  const handleCaptain = ()=>{
-    //enter you captain login system here;
-  };
-
   return (
     <div className='h-screen flex flex-col justify-between p-7'>
       <img 
@@ -49,7 +45,7 @@ const Login = () => {
         <button 
           type="button" 
           onClick={handleSubmit} 
-          className='bg-[#111] font-semibold text-white mb-7 rounded px-4 py-2 border w-full text-lg'
+          className='bg-[#111] font-semibold text-white mb-7 rounded px-4 py-2 border w-full text-lg hover:cursor-pointer'
         >
           Login
         </button>
@@ -61,12 +57,11 @@ const Login = () => {
       </form>
 
       <div>
-        <button 
-          className='bg-purple-800 font-semibold text-white mb-7 rounded px-4 py-2 border w-full text-lg mt-1'
-          onClick={handleCaptian}
+        <Link to={"/captain-login"} 
+          className='flex justify-center w-full bg-purple-800 py-3 text-white rounded mt-5 text-lg'
         >
           Sign in as Captain
-        </button>
+        </Link>
       </div>
     </div>
   );
