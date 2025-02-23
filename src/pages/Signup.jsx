@@ -1,20 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux"
+import { newUser } from "../features/user/userSlice"
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
 
+  const { loading, error } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFrstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstname, setfirstName] = useState("");
+  const [lastname, setlastName] = useState("");
 
-  const handleSubmit = () => {
-    //write you submit code here;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      firstname,
+      lastname,
+      email,
+      password
+    }
+
+    dispatch(newUser(userData));
+    if (newUser.fulfilled) {
+      toast.success("Signup successfully");
+      navigate("/user-login")
+    }
+
   };
 
   useEffect(() => {
-    // write your clean up code here
-  }, [])
+    if (error) {
+      toast.error(error);
+    }
+
+    return () => {
+      setfirstName("");
+      setlastName("");
+      setEmail("");
+      setPassword("");
+    }
+
+
+  }, [error, dispatch]);
 
   return (
     <div className='h-screen flex flex-col justify-between p-7'>
@@ -30,7 +63,7 @@ const Signup = () => {
           <input
             type="text"
             value={firstname}
-            onChange={((e) => setFrstname(e.target.value))}
+            onChange={((e) => setfirstName(e.target.value))}
             required
             placeholder='First name'
             className='bg-[#eeeeee] mb-7 rounded border w-1/2 px-7 text-lg placeholder:text-sm'
@@ -39,7 +72,7 @@ const Signup = () => {
             type="text"
             value={lastname}
             required
-            onChange={(e) => setLastname(e.target.value)}
+            onChange={(e) => setlastName(e.target.value)}
             placeholder='Last name'
             className='bg-[#eeeeee] mb-7 rounded border w-1/2 px-7 text-lg placeholder:text-sm'
           />
@@ -69,7 +102,7 @@ const Signup = () => {
           onClick={handleSubmit}
           className='bg-[#111] font-semibold text-white mb-7 rounded px-4 py-2 border w-full text-lg hover:cursor-pointer'
         >
-          Signup
+          {loading ? "Signup..." : "Signup"}
         </button>
 
         <div className='text-center'>

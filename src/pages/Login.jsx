@@ -1,17 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux"
+import {useNavigate} from "react-router-dom";
+import toast from 'react-hot-toast'
+import { loginUser } from "../features/user/userSlice"
 
 const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const {error, loading} = useSelector((state)=>state.user);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = () => {
-    //write your sumbit code here;
+    const userData = {
+      email,
+      password
+    };
+    dispatch(loginUser(userData));
+    if (loginUser.fulfilled) {
+      toast.success("Login successfully");
+      navigate("/user-login")
+    }
   };
-
+  
   useEffect(() => {
-    //write your cleanup code here;
-  }, []);
+    if(error){
+      toast.error(error);
+    }
+
+    return ()=>{
+      setEmail("");
+      setPassword("");
+    }
+  }, [error, dispatch]);
 
   return (
     <div className='h-screen flex flex-col justify-between p-7'>
@@ -47,7 +72,7 @@ const Login = () => {
           onClick={handleSubmit} 
           className='bg-[#111] font-semibold text-white mb-7 rounded px-4 py-2 border w-full text-lg hover:cursor-pointer'
         >
-          Login
+          {loading? "Login...":"Login"}
         </button>
 
         <div className='text-center'>

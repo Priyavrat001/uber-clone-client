@@ -1,19 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import toast from "react-hot-toast";
+import { captainSignup } from "../../features/captain/captainSlice";
 
 const CaptainSignup = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {loading, error} = useSelector(state=>state.captain);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFrstname] = useState("");
+  const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
   const handleSubmit = () => {
-    //write you submit code here;
+    const captainData = {
+      firstname,
+      lastname,
+      email,
+      password
+    }
+    dispatch(captainSignup(captainData))
+    if(captainSignup.fulfilled){
+      toast.success("Signup Successfully");
+      navigate("/captain-login")
+    }
   };
 
   useEffect(() => {
-    // write your clean up code here
-  }, []);
+    if(error){
+      toast.error(error);
+    };
+
+    return ()=>{
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setPassword("");
+    }
+  }, [error, dispatch]);
 
   return (
     <div className="h-screen flex flex-col justify-between p-7">
@@ -29,7 +56,7 @@ const CaptainSignup = () => {
           <input
             type="text"
             value={firstname}
-            onChange={(e) => setFrstname(e.target.value)}
+            onChange={(e) => setFirstname(e.target.value)}
             required
             placeholder="First name"
             className="bg-[#eeeeee] mb-7 rounded border w-1/2 px-7 text-lg placeholder:text-sm"
@@ -68,7 +95,7 @@ const CaptainSignup = () => {
           onClick={handleSubmit}
           className="bg-[#111] font-semibold text-white mb-7 rounded px-4 py-2 border w-full text-lg hover:cursor-pointer"
         >
-          Signup
+          {loading ? "Signup..." : "Signup"}
         </button>
 
         <div className="text-center">
