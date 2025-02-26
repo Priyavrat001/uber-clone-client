@@ -10,7 +10,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {error, loading} = useSelector((state)=>state.user);
+  const {error, loading, user} = useSelector((state)=>state.user);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ const Login = () => {
     dispatch(loginUser(userData));
     if (loginUser.fulfilled) {
       toast.success("Login successfully");
-      navigate("/user-login")
+      navigate("/home")
     }
   };
   
@@ -37,6 +37,13 @@ const Login = () => {
       setPassword("");
     }
   }, [error, dispatch]);
+
+  useEffect(() => {
+    if(user){
+      navigate("/home")
+    }
+  }, [user])
+  
 
   return (
     <div className='h-screen flex flex-col justify-between p-7'>

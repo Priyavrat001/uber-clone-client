@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
 
-  const { loading, error } = useSelector(state => state.user);
+  const { loading, error, user } = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,8 +46,13 @@ const Signup = () => {
       setPassword("");
     }
 
-
   }, [error, dispatch]);
+
+  useEffect(() => {
+    if(user){
+      navigate("/home")
+    }
+  }, [user])
 
   return (
     <div className='h-screen flex flex-col justify-between p-7'>
