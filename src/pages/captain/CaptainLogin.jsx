@@ -27,7 +27,7 @@ const CaptainLogin = () => {
 
     if(captainLogin.fulfilled){
       toast.success("Login successfully");
-      navigate("/")
+      navigate("/user-login")
     }
      
   };

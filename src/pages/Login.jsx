@@ -46,12 +46,13 @@ const Login = () => {
   
 
   return (
-    <div className='h-screen flex flex-col justify-between p-7'>
+    <>
+    <div className='h-screen flex flex-col justify-between p-7 lg:w-[40%] m-auto'>
       <img 
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbomzfOhM-BsNHGXcRBdJsO8g1shOox1a2Iw&s" 
         alt="logo" 
-        className='w-16 mb-10 rounded-full' 
-      />
+        className='w-16 mb-10 rounded-full lg: flex-end' 
+        />
 
       <form>
         <h3 className='text-lg font-medium mb-2'>What's your email</h3>
@@ -91,11 +92,12 @@ const Login = () => {
       <div>
         <Link to={"/captain-login"} 
           className='flex justify-center w-full bg-purple-800 py-3 text-white rounded mt-5 text-lg'
-        >
+          >
           Sign in as Captain
         </Link>
       </div>
     </div>
+          </>
   );
 };
 
