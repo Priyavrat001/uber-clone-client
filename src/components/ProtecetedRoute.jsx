@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react'
 import { Navigate} from 'react-router-dom'
+import LayoutLoading from './LayoutLoading';
 
-const UserProtecetedRoute = ({ user, children }) => {
+const UserProtecetedRoute = ({ user, loading, children }) => {
+    if(loading){
+        <LayoutLoading/>
+    }
     if(!user){
-        return <Navigate to={"/user-login"}/>
+      <Navigate to={"/user-login"}/>
+      return;
     }
      
     return children
