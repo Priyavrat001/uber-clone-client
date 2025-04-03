@@ -1,8 +1,8 @@
-# React + Vite
+# Uber-clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About this project
+- I have try to build the some of the uber features. Where you can login as user and also login as captain as well and you can book a ride and as a captain you can find the coustumers as well.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- For disigning this app i used tailwind css and for the routing used react-router-dom.

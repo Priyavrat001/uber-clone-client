@@ -51,7 +51,7 @@ const CaptainLogin = () => {
         className="w-16 mb-10 rounded-full"
       />
 
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()} className="lg:flex m-auto flex-col h-full">
         <h3 className="text-lg font-medium mb-2">What's your email</h3>
         <input
           type="email"
@@ -88,10 +88,10 @@ const CaptainLogin = () => {
         </div>
       </form>
 
-      <div>
+      <div className="flex items-center justify-center">
         <Link
           to={"/user-login"}
-          className="flex justify-center w-full bg-purple-800 py-3 text-white rounded mt-5 text-lg"
+          className="flex justify-center w-full bg-purple-800 py-3 text-white rounded mt-5 text-lg lg:w-[20%]"
         >
           Sign in as User
         </Link>
