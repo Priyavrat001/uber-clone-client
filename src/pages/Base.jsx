@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
-import 'remixicon/fonts/remixicon.css'
 import LocationSearch from '../components/LocationSearch';
 import SelectCar from '../components/SelectCar';
 import ConfirmVehicel from '../components/ConfirmVehicel';

@@ -7,7 +7,7 @@ import {captainLogin} from "../../features/captain/captainSlice"
 const CaptainLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.captain);
+  const { captain, loading, error } = useSelector((state) => state.captain);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +27,7 @@ const CaptainLogin = () => {
 
     if(captainLogin.fulfilled){
       toast.success("Login successfully");
-      navigate("/user-login")
+      navigate("/captain-home")
     }
      
   };
@@ -36,6 +36,10 @@ const CaptainLogin = () => {
     if (error) {
       toast.error(error);
     };
+
+    if(captain){
+      navigate("/captain-home")
+    }
 
     return()=>{
       setEmail("");
