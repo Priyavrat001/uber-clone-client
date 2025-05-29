@@ -42,6 +42,17 @@ This is a React-based frontend for an Uber-like ride-hailing application. Users 
 - `src/config/` — App configuration
 - `src/assets/` — Images and icons
 
+## Animations
+
+This project uses [Framer Motion](https://www.framer.com/motion/) for smooth page and component transitions. All main pages and nested components, including the captain dashboard and ride popups, feature animated appearance and disappearance for a modern, fluid user experience.
+
+**Examples of animated components:**
+- Main map and panels on the user and captain dashboards
+- Ride popups and confirmation dialogs
+- Login, signup, and riding pages
+
+Animations are implemented using `<motion.div>`, `<motion.img>`, and `<AnimatePresence>` wrappers throughout the codebase.
+
 ## Notes
 - This project is for learning and demonstration purposes. It mimics some core Uber features but is not production-ready.
 - The backend server must be running for full functionality (see the `server/README.md`).

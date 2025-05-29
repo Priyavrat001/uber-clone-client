@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { captainSignup } from "../../features/captain/captainSlice";
+import { motion } from 'framer-motion';
 
 const CaptainSignup = () => {
 
@@ -60,7 +61,13 @@ const CaptainSignup = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="h-screen flex flex-col justify-between p-7 items-center">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 40 }}
+      transition={{ duration: 0.4 }}
+      className="h-screen flex flex-col justify-between p-7 items-center"
+    >
       <img
         src="https://res.cloudinary.com/teepublic/image/private/s--vqMV6xd5--/c_crop,x_10,y_10/c_fit,w_830/c_crop,g_north_west,h_1038,w_1038,x_-104,y_-276/l_upload:v1565806151:production:blanks:vdbwo35fw6qtflw9kezw/fl_layer_apply,g_north_west,x_-215,y_-387/b_rgb:000000/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1641318368/production/designs/26914025_0.jpg"
         alt="logo"
@@ -169,7 +176,7 @@ const CaptainSignup = () => {
           up, you agree to the terms of this Privacy Policy.
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

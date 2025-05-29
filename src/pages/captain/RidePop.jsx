@@ -1,8 +1,16 @@
 import React from 'react'
+import { motion, AnimatePresence } from 'framer-motion';
 
 const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp}) => {
   return (
-    <div onClick={() => setRidePopUpPanel(false)}>
+    <AnimatePresence>
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 40, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        onClick={() => setRidePopUpPanel(false)}
+      >
         <h5 className='p-1 text-center w-[93%] absolute top-0'>
           <i className="text-3 text-gray-200 xl ri-arrow-down-wide-line"></i>
         </h5>
@@ -46,7 +54,8 @@ const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp}) => {
         <div>
           <button onClick={()=> setRidePopUpPanel(false)} className='w-full mt-1 bg-gray-300 text-gray-700 font-semibold px-3 rounded-lg py-4 text-center'>Ignore</button>
         </div>
-      </div>
+      </motion.div>
+    </AnimatePresence>
   )
 }
 

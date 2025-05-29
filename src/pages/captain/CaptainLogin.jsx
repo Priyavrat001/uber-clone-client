@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {captainLogin} from "../../features/captain/captainSlice"
+import { captainLogin } from "../../features/captain/captainSlice";
+import { motion } from "framer-motion";
 
 const CaptainLogin = () => {
   const dispatch = useDispatch();
@@ -25,37 +26,45 @@ const CaptainLogin = () => {
 
     dispatch(captainLogin(captainData));
 
-    if(captainLogin.fulfilled){
+    if (captainLogin.fulfilled) {
       toast.success("Login successfully");
-      navigate("/captain-home")
+      navigate("/captain-home");
     }
-     
   };
 
   useEffect(() => {
     if (error) {
       toast.error(error);
-    };
-
-    if(captain){
-      navigate("/captain-home")
     }
 
-    return()=>{
+    if (captain) {
+      navigate("/captain-home");
+    }
+
+    return () => {
       setEmail("");
-      setPassword("")
-    }
+      setPassword("");
+    };
   }, [error, dispatch]);
 
   return (
-    <div className="h-screen flex flex-col justify-between p-7">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 40 }}
+      transition={{ duration: 0.4 }}
+      className="h-screen flex flex-col justify-between p-7"
+    >
       <img
         src="https://res.cloudinary.com/teepublic/image/private/s--vqMV6xd5--/c_crop,x_10,y_10/c_fit,w_830/c_crop,g_north_west,h_1038,w_1038,x_-104,y_-276/l_upload:v1565806151:production:blanks:vdbwo35fw6qtflw9kezw/fl_layer_apply,g_north_west,x_-215,y_-387/b_rgb:000000/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1641318368/production/designs/26914025_0.jpg"
         alt="logo"
         className="w-16 mb-10 rounded-full"
       />
 
-      <form onSubmit={(e) => e.preventDefault()} className="lg:flex m-auto flex-col h-full">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="lg:flex m-auto flex-col h-full"
+      >
         <h3 className="text-lg font-medium mb-2">What's your email</h3>
         <input
           type="email"
@@ -100,7 +109,7 @@ const CaptainLogin = () => {
           Sign in as User
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

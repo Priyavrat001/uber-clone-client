@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from 'framer-motion';
 import CaptainDetails from "../../components/captain/CaptainDetails";
 import RidePop from "./RidePop";
 import ConfirmRide from "../../components/captain/ConfirmRide";
@@ -19,24 +20,34 @@ const CaptainHome = () => {
         </Link>
       </div>
       <div className="h-3/5">
-        <img
+        <motion.img
           className="h-full w-full object-cover transition-all duration-500"
           src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
           alt="temp"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
         />
       </div>
       <CaptainDetails />
-      <div className="fixed w-full z-10 bottom-0 bg-white px-3 py-10 pt-12 transition-all duration-500 ease-in-out transform animate-slide-up">
-  {ridePopUpPanel && !confirmRidePopUp && (
-    <RidePop
-      setRidePopUpPanel={setRidePopUpPanel}
-      setConfirmRidePopUp={setConfirmRidePopUp}
-    />
-  )}
-  {confirmRidePopUp && (
-    <ConfirmRide setConfirmRidePopUp={setConfirmRidePopUp} setRidePopUpPanel={setRidePopUpPanel}/>
-  )}
-</div>
+      <AnimatePresence>
+        <motion.div className="fixed w-full z-10 bottom-0 bg-white px-3 py-10 pt-12 transition-all duration-500 ease-in-out transform animate-slide-up"
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ duration: 0.4 }}>
+          {ridePopUpPanel && !confirmRidePopUp && (
+            <RidePop
+              setRidePopUpPanel={setRidePopUpPanel}
+              setConfirmRidePopUp={setConfirmRidePopUp}
+            />
+          )}
+          {confirmRidePopUp && (
+            <ConfirmRide setConfirmRidePopUp={setConfirmRidePopUp} setRidePopUpPanel={setRidePopUpPanel}/>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
