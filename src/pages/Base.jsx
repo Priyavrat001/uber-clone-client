@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,7 @@ const Base = () => {
 
   const { map, loading, error } = useSelector(state => state.map);
 
-  const suggestions = map.suggestions || []
+  const suggestions = map.suggestions || [];
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,12 +25,13 @@ const Base = () => {
   const [confirmVehicel, setConfirmVehicel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [driverFound, setDriverFound] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'error' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     //enter you code here
 
-  }
+  };
 
   useEffect(() => {
     if (pickUp) {
@@ -43,6 +44,15 @@ const Base = () => {
 
     //todo show the data on suggestion screen
   }, [pickUp, destination, dispatch]);
+
+  const findTrip = () => {
+    if (!pickUp || !destination) {
+      alert("Plase selcect all the location");
+      return;
+    }
+    setVehiclePanelOpen(true);
+    setScreen(false);
+  }
 
   return (
     <div className='m-h-screen relative overflow-hidden'>
@@ -90,6 +100,9 @@ const Base = () => {
             <input onClick={() => setScreen(true)} value={pickUp} className='bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-5' type="text" placeholder='Added a pickup location' onChange={(e)=>setPickUp(e.target.value)} />
             <input onClick={() => setScreen(true)} value={destination} className='bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-5' type="text" placeholder='Enter your destination' onChange={(e) => setDestination(e.target.value)} />
           </form>
+          <button type="button" className='w-full bg-black text-white font-semibold px-3 rounded-lg py-4 text-center mt-5 hover:cursor-pointer' onClick={findTrip}>
+            Find Trip
+          </button>
         </motion.div>
         <AnimatePresence>
           {screen === true ? (

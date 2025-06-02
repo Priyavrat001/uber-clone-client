@@ -53,6 +53,55 @@ This project uses [Framer Motion](https://www.framer.com/motion/) for smooth pag
 
 Animations are implemented using `<motion.div>`, `<motion.img>`, and `<AnimatePresence>` wrappers throughout the codebase.
 
+## Location Suggestion & Search
+
+This project features a dynamic location suggestion and search system for booking rides, similar to modern ride-hailing apps.
+
+### How It Works
+- As the user types a pickup or destination address, the frontend dispatches an action to fetch location suggestions from the backend.
+- The backend integrates with a geocoding API (such as OpenRouteService or maps.co) to return a list of relevant locations based on the user's input.
+- Suggestions are displayed in real-time below the input fields, allowing users to quickly select the correct address.
+- Selecting a suggestion fills the input and triggers the next step in the booking flow.
+
+### Key Features
+- **Live Suggestions:** Location suggestions update as you type, making it fast and easy to find addresses.
+- **Accurate Results:** Uses geocoding APIs to provide up-to-date and relevant location data.
+- **User Experience:** Suggestions are shown in a modern, animated panel with smooth transitions (powered by Framer Motion).
+- **Reusable Components:** The `LocationSearch` component handles displaying and selecting suggestions, and is easily reusable for both pickup and destination fields.
+
+### API Example
+A typical API response for location suggestions:
+```json
+{
+  "success": true,
+  "data": {
+    "features": [
+      {
+        "properties": {
+          "label": "Ayodhya Police Station, Ayodhya, UP, India"
+        }
+      },
+      {
+        "properties": {
+          "label": "Ramkot Chowk, Ayodhya, UP, India"
+        }
+      }
+      // ...more suggestions
+    ]
+  }
+}
+```
+
+### Usage in the App
+- The user starts typing in the pickup or destination field.
+- Suggestions appear instantly below the field.
+- Clicking a suggestion sets the field value and closes the suggestion panel.
+- The system is designed for speed, accuracy, and a seamless booking experience.
+
+---
+
+For more details, see the `Base.jsx` page and the `LocationSearch.jsx` component in the codebase.
+
 ## Notes
 - This project is for learning and demonstration purposes. It mimics some core Uber features but is not production-ready.
 - The backend server must be running for full functionality (see the `server/README.md`).
