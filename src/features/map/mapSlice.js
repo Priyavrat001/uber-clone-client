@@ -15,13 +15,28 @@ const getSuggestedLoctions = createAsyncThunk("map/getSuggestedLoctions", async 
     }
 });
 
+const getDestence = createAsyncThunk("map/getDestence", async ({origin, destination}, { rejectWithValue }) => {
+    try {
+        const response = await axios.get(`${server}/map/get-distance`, {
+            params: { origin, destination },
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data?.message || "Failed to fetch suggestions");
+    }
+});
+
 // Redux Slice
 const mapSlice = createSlice({
     name: "map",
     initialState: {
         map: {
-            coordinates: null,
-            distance: null,
+            coordinates: {
+                origin:null,
+                destination:null
+            },
+            duration: null,
             suggestions: { locations: [] }
         },
         loading: false,
@@ -44,12 +59,28 @@ const mapSlice = createSlice({
                 state.error = action.payload;
             })
 
+            //get destence
+            .addCase(getDestence.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getDestence.fulfilled, (state, action) => {
+                state.loading = false;
+                state.map.duration = action.payload.durationInMin;
+                state.map.coordinates.origin = action.payload.origin;
+                state.map.coordinates.destination = action.payload.destination
+            })
+            .addCase(getDestence.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
 
     },
 });
 
 // Export Async Actions
-export { getSuggestedLoctions };
+export { getSuggestedLoctions, getDestence };
 
 // Export Reducer
 export default mapSlice.reducer;

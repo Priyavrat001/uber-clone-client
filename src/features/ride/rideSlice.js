@@ -3,10 +3,10 @@ import axios from "axios";
 import { server } from "../../config/server";
 
 // Async Thunks
-const getFarePrice = createAsyncThunk("ride/getFarePrice", async ({ pickup, destination }, { rejectWithValue }) => {
+const getFarePrice = createAsyncThunk("ride/getFarePrice", async ({ pickUp, destination }, { rejectWithValue }) => {
     try {
         const response = await axios.get(`${server}/ride/get-fare-price`, {
-            params: { pickup, destination },
+            params: { pickUp, destination }, // FIX: use correct param names
             withCredentials: true
         });
         return response.data;
@@ -31,7 +31,7 @@ const rideSlice = createSlice({
             })
             .addCase(getFarePrice.fulfilled, (state, action) => {
                 state.loading = false;
-                state.fares = action.payload.fares;
+                state.fares = action.payload.fare;
             })
             .addCase(getFarePrice.rejected, (state, action) => {
                 state.loading = false;
