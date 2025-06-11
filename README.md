@@ -42,6 +42,37 @@ This is a React-based frontend for an Uber-like ride-hailing application. Users 
 - `src/config/` — App configuration
 - `src/assets/` — Images and icons
 
+## Project File Structure
+
+```
+client/
+  public/                # Static assets
+  src/
+    assets/              # Images and icons
+    components/          # Reusable UI components (location search, car selection, ride status, etc.)
+      captain/           # Captain-specific components
+    config/              # App configuration files
+    features/            # Redux slices for user, captain, map, and ride state
+      captain/
+      map/
+      ride/
+      user/
+    pages/               # Main pages (Home, Login, Signup, Riding, etc.)
+      captain/           # Captain-specific pages
+    App.jsx              # Main app component
+    main.jsx             # Entry point
+    app/store.js         # Redux store setup
+    index.css, App.css   # Global styles
+  package.json           # Project metadata and dependencies
+  tailwind.config.js     # Tailwind CSS configuration
+  vite.config.js         # Vite configuration
+  README.md              # Project documentation
+```
+
+This structure helps keep the codebase organized and maintainable, separating concerns for pages, components, features (Redux), and configuration.
+
+---
+
 ## Animations
 
 This project uses [Framer Motion](https://www.framer.com/motion/) for smooth page and component transitions. All main pages and nested components, including the captain dashboard and ride popups, feature animated appearance and disappearance for a modern, fluid user experience.
@@ -102,10 +133,100 @@ A typical API response for location suggestions:
 
 For more details, see the `Base.jsx` page and the `LocationSearch.jsx` component in the codebase.
 
+## Recent Improvements & Advanced Features
+
+- **Dual-Field Location Suggestion/Search:**
+  - Both pickup and destination fields now support live location suggestions.
+  - The UI tracks which field is active, ensuring suggestions are context-aware and user-friendly.
+  - Suggestions are fetched and displayed in real-time as the user types, for both fields.
+
+- **Live Fare Price Calculation:**
+  - Fare prices for all vehicle types (bike, auto, car) are fetched from the backend based on the selected pickup and destination.
+  - The fare is displayed instantly after both locations are selected, providing transparency before booking.
+  - Redux state manages fares, loading, and error states for a smooth experience.
+
+- **Modern, Animated UI:**
+  - All main and nested components (including ride panels, vehicle selection, and captain pages) use Framer Motion for smooth transitions and animations.
+  - The booking flow features animated panels for location selection, vehicle choice, and ride status updates.
+
+- **Improved Ride Booking Flow:**
+  - The UI guides users through each step: location selection, vehicle selection, fare confirmation, and ride status.
+  - Vehicle selection and fare confirmation are visually appealing and accessible.
+
+- **Robust Error Handling:**
+  - Errors in fare fetching or location search are handled gracefully, with user feedback and alerts.
+
+---
+
 ## Notes
 - This project is for learning and demonstration purposes. It mimics some core Uber features but is not production-ready.
 - The backend server must be running for full functionality (see the `server/README.md`).
 
 ---
 
-Feel free to explore the code and suggest improvements!
+## All Project Files
+
+Below is a list of all files and folders in the `client/` directory as of June 11, 2025. This can help with onboarding, debugging, and understanding the project structure.
+
+```
+client/
+  eslint.config.js
+  index.html
+  package.json
+  postcss.config.js
+  README.md
+  tailwind.config.js
+  vite.config.js
+  public/
+    vite.svg
+  src/
+    App.css
+    App.jsx
+    index.css
+    main.jsx
+    app/
+      store.js
+    assets/
+      home.jpg
+      react.svg
+    components/
+      ConfirmVehicel.jsx
+      LayoutLoading.jsx
+      LocationSearch.jsx
+      LookingForDriver.jsx
+      ProtecetedRoute.jsx
+      SelectCar.jsx
+      WaitingForDriver.jsx
+      captain/
+        CaptainDetails.jsx
+        ConfirmRide.jsx
+        FinishRide.jsx
+    config/
+      server.js
+      syle.js
+    features/
+      captain/
+        captainSlice.js
+      map/
+        mapSlice.js
+      ride/
+        rideSlice.js
+      user/
+        userSlice.js
+    pages/
+      Base.jsx
+      Home.jsx
+      Login.jsx
+      Riding.jsx
+      Signup.jsx
+      captain/
+        CaptainHome.jsx
+        CaptainLogin.jsx
+        CaptainRiding.jsx
+        CaptainSignup.jsx
+        RidePop.jsx
+```
+
+Each file and folder serves a specific purpose, as described in the earlier 'Project File Structure' section. For more details on any file, see the codebase or ask for a summary of its contents.
+
+---
