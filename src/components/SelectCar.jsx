@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SelectCar = ({ vehiclePanelOpen, setVehiclePanelOpen, setConfirmVehicel, fares, duration }) => {
+const SelectCar = ({ vehiclePanelOpen, setVehiclePanelOpen, setConfirmVehicel, fares, duration, createARide }) => {
   return (
     <>
       {
@@ -15,6 +15,7 @@ const SelectCar = ({ vehiclePanelOpen, setVehiclePanelOpen, setConfirmVehicel, f
             <div onClick={() => {
               setConfirmVehicel(true);
               setVehiclePanelOpen(false)
+              createARide("car")
             } } className='flex items-center border-2 active:border-black bg-gray-100 rounded-xl justify-between w-full px-3 py-6 mb-2'>
               <img className='h-11' src="https://th.bing.com/th/id/R.8b01377204f7e5e60f3928fa9c6d8d8d?rik=veNTNapnhdPf5A&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fpng-hd-images-of-cars-volkswagen-png-hd-1500.png&ehk=bzMQ1ueAXMsJzhilqNehN77R9uwSPUm8hoyg%2bCU3wYo%3d&risl=&pid=ImgRaw&r=0" alt="car image" />
 
@@ -25,7 +26,10 @@ const SelectCar = ({ vehiclePanelOpen, setVehiclePanelOpen, setConfirmVehicel, f
               </div>
               <h2 className='text-2xl font-semibold'>₹{fares?.car}</h2>
             </div>
-            <div onClick={() => setConfirmVehicel(true)} className='flex items-center border-2 active:border-black bg-gray-100 rounded-xl justify-between w-full px-3 py-6 mb-2'>
+            <div onClick={() => {
+              setConfirmVehicel(true);
+              createARide("bike")
+            }} className='flex items-center border-2 active:border-black bg-gray-100 rounded-xl justify-between w-full px-3 py-6 mb-2'>
               <img className='h-11' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1698944322/assets/92/00189a-71c0-4f6d-a9de-1b6a85239079/original/UberMoto-India-Orange.png" alt="car image" />
 
               <div className='w-1/2'>
@@ -35,7 +39,10 @@ const SelectCar = ({ vehiclePanelOpen, setVehiclePanelOpen, setConfirmVehicel, f
               </div>
               <h2 className='text-2xl font-semibold'>₹{fares?.bike}</h2>
             </div>
-            <div onClick={() => setConfirmVehicel(true)} className='flex items-center border-2 active:border-black bg-gray-100 rounded-xl justify-between w-full px-3 py-6 mb-2'>
+            <div onClick={() => {
+              setConfirmVehicel(true),
+              createARide("auto")
+            }} className='flex items-center border-2 active:border-black bg-gray-100 rounded-xl justify-between w-full px-3 py-6 mb-2'>
               <img className='h-11' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png" alt="car image" />
 
               <div className='w-1/2'>

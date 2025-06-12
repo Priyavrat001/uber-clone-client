@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WaitingForDriver = () => {
+const WaitingForDriver = ({coordinates, fares}) => {
   return (
     <div >
       <h5 className='p-1 text-center w-[93%] absolute top-0'>
@@ -18,21 +18,19 @@ const WaitingForDriver = () => {
         <div className='flex items-center gap-5 p-3 border-b-2'>
           <i className="text-lg ri-map-pin-fill"></i>
           <div>
-            <h3 className='text-lg font-medium'>115, ayodhya</h3>
-            <p className='-mt-1 text-small text-gray-600'>Greater noaida</p>
+            <h3 className='text-lg font-medium'>{coordinates.origin}</h3>
           </div>
         </div>
         <div className='flex items-center gap-5 p-3 border-b-2'>
           <i className="ri-map-pin-2-fill"></i>
           <div>
-            <h3 className='text-lg font-medium'>115, currentlocation</h3>
-            <p className='-mt-1 text-small text-gray-600'>Greater noaida</p>
+            <h3 className='text-lg font-medium'>{coordinates.destination}</h3>
           </div>
         </div>
         <div className='flex items-center gap-5 p-3'>
           <i className="ri-currency-fill"></i>
           <div>
-            <h3 className='text-lg font-medium'>₹193.22</h3>
+            <h3 className='text-lg font-medium'>₹{fares.car}</h3>
             <p className='-mt-1 text-small text-gray-600'>Cash cash</p>
           </div>
         </div>

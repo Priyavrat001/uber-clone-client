@@ -7,13 +7,13 @@ import LookingForDriver from '../components/LookingForDriver';
 import SelectCar from '../components/SelectCar';
 import WaitingForDriver from '../components/WaitingForDriver';
 import { getDestence, getSuggestedLoctions } from '../features/map/mapSlice';
-import { getFarePrice } from '../features/ride/rideSlice';
+import { getFarePrice, createNewRide } from '../features/ride/rideSlice';
 import {toast} from "react-hot-toast";
 
 const Base = () => {
 
-  const { map } = useSelector(state => state.map);
-  const { fares, loading, error } = useSelector(state => state.ride);
+  const { map, error:mapError, loading:mapLoading } = useSelector(state => state.map);
+  const { fares, newRide, loading, error } = useSelector(state => state.ride);
 
   const suggestions = map.suggestions || [];
 
@@ -40,7 +40,7 @@ const Base = () => {
     } else if (activeField === 'destination' && destination) {
       dispatch(getSuggestedLoctions(destination));
     }
-    //todo show the data on suggestion screen
+
   }, [pickUp, destination, activeField, dispatch]);
 
   const findTrip = () => {
@@ -58,10 +58,31 @@ const Base = () => {
       dispatch(getDestence({origin:pickUp, destination}))
     };
 
-    if(error){
-      toast.error(error.message || "Not able to find the address");
+    if(error.faresError){
+      toast.error(error.message || "Something went wrong!");
+      return;
     }
   };
+
+
+  const createARide = async(vechicleType)=>{
+    const rideData = {
+      pickUp,
+      destination,
+      vechicleType
+    };
+
+    if(rideData){
+      dispatch(createNewRide(rideData));
+    };
+
+    if(error){
+      toast.error(error.message || "Unable to create a new ride");
+    };
+    console.log(vechicleType)
+    console.log(newRide)
+  };
+
   
 
   return (
@@ -157,7 +178,7 @@ const Base = () => {
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <LookingForDriver setDriverFound={setDriverFound} setVehicleFound={setVehicleFound} />
+            <LookingForDriver setDriverFound={setDriverFound} setVehicleFound={setVehicleFound} coordinates={map?.coordinates} fares={fares}/>
           </motion.div>
         )}
       </AnimatePresence>
@@ -170,7 +191,7 @@ const Base = () => {
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <WaitingForDriver />
+            <WaitingForDriver coordinates={map?.coordinates} fares={fares}/>
           </motion.div>
         )}
       </AnimatePresence>
@@ -190,7 +211,7 @@ const Base = () => {
           fares={fares}
         />
       </motion.div>
-      <SelectCar vehiclePanelOpen={vehiclePanelOpen} setVehiclePanelOpen={setVehiclePanelOpen} confirmVehicel={confirmVehicel} setConfirmVehicel={setConfirmVehicel} fares={fares} duration={map.duration} />
+      <SelectCar vehiclePanelOpen={vehiclePanelOpen} setVehiclePanelOpen={setVehiclePanelOpen} confirmVehicel={confirmVehicel} setConfirmVehicel={setConfirmVehicel} fares={fares} duration={map.duration} createARide={createARide}/>
     </div>
   )
 }
