@@ -5,7 +5,7 @@ import { server } from "../../config/server";
 // Async Thunks
 const getSuggestedLoctions = createAsyncThunk("map/getSuggestedLoctions", async (query, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${server}/map/get-suggested-locations`, {
+        const response = await axios.get(`${server}/api/v1/map/get-suggested-locations`, {
             params: { address: query },
             withCredentials: true
         });
@@ -17,7 +17,7 @@ const getSuggestedLoctions = createAsyncThunk("map/getSuggestedLoctions", async 
 
 const getDestence = createAsyncThunk("map/getDestence", async ({origin, destination}, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${server}/map/get-distance`, {
+        const response = await axios.get(`${server}/api/v1/map/get-distance`, {
             params: { origin, destination },
             withCredentials: true
         });

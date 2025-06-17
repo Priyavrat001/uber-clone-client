@@ -22,7 +22,7 @@ const Signup = lazy(() => import("./pages/Signup"));
 const App = () => {
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector(state => state.user);
-  const {captain, loading:captainLoading, error:captainError} = useSelector(state=> state.captain)
+  const {captainDetails, loading:captainLoading, error:captainError} = useSelector(state=> state.captain);
 
   useEffect(() => {
     if (!user && !loading && !error) {
@@ -31,10 +31,10 @@ const App = () => {
   }, [dispatch, user, loading, error]); 
 
   useEffect(()=>{
-    if(!captain && !captainLoading && !captainError){
+    if(!captainDetails && !captainLoading && !captainError){
       dispatch(getCaptain());
     }
-  },[captain, captainLoading, captainError]);
+  },[captainDetails, captainLoading, captainError]);
 
   return loading ? <LayoutLoading/>:(
     <>
@@ -55,12 +55,12 @@ const App = () => {
             </UserProtecetedRoute>
           }/>
           <Route path='/captain-home' element={
-            <CaptainProtectedRoute captain={captain} captainLoading={captainLoading}>
+            <CaptainProtectedRoute captain={captainDetails} captainLoading={captainLoading}>
               <CaptainHome/>
             </CaptainProtectedRoute>
           }/>
           <Route path='/captain-riding' element={
-            <CaptainProtectedRoute captain={captain} captainLoading={captainLoading}>
+            <CaptainProtectedRoute captain={captainDetails} captainLoading={captainLoading}>
               <CaptainRiding/>
             </CaptainProtectedRoute>
           }/>

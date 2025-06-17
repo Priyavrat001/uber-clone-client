@@ -1,13 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from 'framer-motion';
 import CaptainDetails from "../../components/captain/CaptainDetails";
 import RidePop from "./RidePop";
 import ConfirmRide from "../../components/captain/ConfirmRide";
+import { useSelector } from "react-redux";
+import { useSocket } from "../../config/SocketContext";
 
 const CaptainHome = () => {
-  const [ridePopUpPanel, setRidePopUpPanel] = useState(true);
+
+ const {captainDetails} = useSelector(state=> state.captain);
+ const socket = useSocket()
+
+
+  const [ridePopUpPanel, setRidePopUpPanel] = useState(false);
   const [confirmRidePopUp, setConfirmRidePopUp] = useState(false);
+  const [ride, setRide] = useState("");
+
+
+
+ useEffect(() => {
+  let watchId;
+
+  if (captainDetails?._id) {
+    // Join room once
+    socket.emit("join", { userType: "captain", userId: captainDetails._id });
+
+    // Setup location watcher
+    if (navigator.geolocation) {
+      watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          socket.emit("update-location-captain", {
+            captainId: captainDetails._id,
+            location: {
+              ltd: latitude,
+              lng: longitude,
+            },
+          });
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 30000,
+          timeout: 27000,
+        }
+      );
+    }
+  }
+
+  // Cleanup
+  return () => {
+    if (watchId !== undefined) {
+      navigator.geolocation.clearWatch(watchId);
+    }
+  };
+}, [captainDetails, socket]);
+
+socket.on("new-ride", (data)=>{
+  console.log(data);
+  setRide(data);
+  setRidePopUpPanel(true);
+})
+
+  
   return (
     <div className="h-screen">
       <div className="fixed p-3 top-0 flex items-center justify-between w-full">
@@ -30,7 +89,7 @@ const CaptainHome = () => {
           transition={{ duration: 0.5 }}
         />
       </div>
-      <CaptainDetails />
+      <CaptainDetails CaptainDetails={captainDetails}/>
       <AnimatePresence>
         <motion.div className="fixed w-full z-10 bottom-0 bg-white px-3 py-10 pt-12 transition-all duration-500 ease-in-out transform animate-slide-up"
           initial={{ y: 100, opacity: 0 }}
@@ -41,6 +100,7 @@ const CaptainHome = () => {
             <RidePop
               setRidePopUpPanel={setRidePopUpPanel}
               setConfirmRidePopUp={setConfirmRidePopUp}
+              ride={ride}
             />
           )}
           {confirmRidePopUp && (

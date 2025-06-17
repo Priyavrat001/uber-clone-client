@@ -20,7 +20,8 @@ const CaptainProtectedRoute = ({ captain, captainLoading, children }) => {
     };
 
     if (!captain) {
-        return <Navigate to={"/captain-login"} />
+        <Navigate to={"/captain-login"} />
+        return;
     }
 
     return children

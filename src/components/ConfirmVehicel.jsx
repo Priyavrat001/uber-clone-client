@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ConfirmVehicel = ({ setVehiclePanelOpen, confirmVehicel, setVehicleFound, setConfirmVehicel, coordinates, fares}) => {
+const ConfirmVehicel = ({ setVehiclePanelOpen, confirmVehicel, setVehicleFound, setConfirmVehicel, coordinates, fares, createARide}) => {
   return (
     confirmVehicel && (
       <div onClick={() => setVehiclePanelOpen(false)}>
@@ -37,6 +37,7 @@ const ConfirmVehicel = ({ setVehiclePanelOpen, confirmVehicel, setVehicleFound, 
           <button onClick={()=>{
             setVehicleFound(true);
             setConfirmVehicel(false)
+            createARide()
           }} className='w-full mt-5 bg-green-600 text-white font-semibold px-3 rounded-lg py-4 text-center'>Confirm</button>
         </div>
       </div>

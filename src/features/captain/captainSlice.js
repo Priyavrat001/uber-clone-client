@@ -4,7 +4,7 @@ import { server } from "../../config/server";
 
 const getCaptain = createAsyncThunk("captain/me", async (_, {rejectWithValue}) => {
   try {
-    const response = await axios.get(`${server}/captain/me`, {
+    const response = await axios.get(`${server}/api/v1/captain/me`, {
       withCredentials: true,
     });
     return response.data;
@@ -17,7 +17,7 @@ const captainLogout = createAsyncThunk(
   "captain/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${server}/captain/logout`, {
+      const response = await axios.get(`${server}/api/v1/captain/logout`, {
         withCredentials: true,
       });
       return response.data;
@@ -33,7 +33,7 @@ const captainLogin = createAsyncThunk(
   "captain/login",
   async (captainData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${server}/captain/login`, captainData, {
+      const response = await axios.post(`${server}/api/v1/captain/login`, captainData, {
         withCredentials: true,
       });
       return response.data;
@@ -47,7 +47,7 @@ const captainSignup = createAsyncThunk(
   "captain/signup",
   async (captainData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${server}/captain/new`, captainData, {
+      const response = await axios.post(`${server}/api/v1/captain/new`, captainData, {
         withCredentials: true,
       });
       return response.data;
@@ -63,6 +63,7 @@ const captainSlice = createSlice({
     captain: null,
     loading: false,
     error: null,
+    captainDetails:null
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -73,7 +74,7 @@ const captainSlice = createSlice({
       })
       .addCase(getCaptain.fulfilled, (state, action) => {
         state.loading = false;
-        state.captain = action.payload;
+        state.captainDetails = action.payload.captain;
       })
       .addCase(getCaptain.rejected, (state, action) => {
         state.loading = false;

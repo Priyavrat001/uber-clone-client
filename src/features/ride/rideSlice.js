@@ -5,7 +5,7 @@ import { server } from "../../config/server";
 // Async Thunks
 const getFarePrice = createAsyncThunk("ride/getFarePrice", async ({ pickUp, destination }, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${server}/ride/get-fare-price`, {
+        const response = await axios.get(`${server}/api/v1/ride/get-fare-price`, {
             params: { pickUp, destination }, // FIX: use correct param names
             withCredentials: true
         });
@@ -16,7 +16,7 @@ const getFarePrice = createAsyncThunk("ride/getFarePrice", async ({ pickUp, dest
 });
 const createNewRide = createAsyncThunk("ride/createNewRide", async (rideData, { rejectWithValue }) => {
     try {
-        const response = await axios.post(`${server}/ride/new-ride`, rideData,{
+        const response = await axios.post(`${server}/api/v1/ride/new-ride`, rideData,{
             withCredentials: true
         });
         return response.data;

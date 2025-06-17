@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 
-const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp}) => {
+const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp, ride}) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -18,7 +18,7 @@ const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp}) => {
     <div className='flex items-center justify-between bg-yellow-400 rounded-lg py-1'>
         <div className='flex items-center gap-3 mt-4'>
         <img className="w-10 h-12 rounded-full object-cover" src="https://mymodernmet.com/wp/wp-content/uploads/2019/09/100k-ai-faces-3.jpg" alt="captain image" />
-        <h2 className='tet-lg font-medium'>Priyavrat</h2>
+        <h2 className='tet-lg font-medium'>{ride?.user?.firstname + " " + ride?.user?.lastname}</h2>
         </div>
         <h5 className='text-lg font-semibold'>2.2 km</h5>
     </div>
@@ -26,21 +26,19 @@ const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp}) => {
           <div className='flex items-center gap-5 p-3 border-b-2'>
             <i className="text-lg ri-map-pin-fill"></i>
             <div>
-              <h3 className='text-lg font-medium'>115, ayodhya</h3>
-              <p className='-mt-1 text-small text-gray-600'>Greater noaida</p>
+              <h3 className='text-lg font-medium'>{ride.pickUp}</h3>
             </div>
           </div>
           <div className='flex items-center gap-5 p-3 border-b-2'>
             <i className="ri-map-pin-2-fill"></i>
             <div>
-              <h3 className='text-lg font-medium'>115, currentlocation</h3>
-              <p className='-mt-1 text-small text-gray-600'>Greater noaida</p>
+              <h3 className='text-lg font-medium'>{ride.destination}</h3>
             </div>
           </div>
           <div className='flex items-center gap-5 p-3'>
             <i className="ri-currency-fill"></i>
             <div>
-              <h3 className='text-lg font-medium'>₹193.22</h3>
+              <h3 className='text-lg font-medium'>₹{ride.fare}</h3>
               <p className='-mt-1 text-small text-gray-600'>Cash cash</p>
             </div>
           </div>

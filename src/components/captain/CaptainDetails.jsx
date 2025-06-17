@@ -1,13 +1,13 @@
 import React from 'react'
 
-const CaptainDetails = () => {
+const CaptainDetails = ({CaptainDetails}) => {
   return (
     <div className="h-2/5 p-6">
     <div className="h-1/2 p-5">
      <div className="flex items-center justify-between mb-3">
      <div className="flex items-center justify-between">
         <img className="w-10 h-10 rounded-full object-cover" src="https://mymodernmet.com/wp/wp-content/uploads/2019/09/100k-ai-faces-3.jpg" alt="captain image" />
-        <h4 className="text-lg font-medium">Priyavrat</h4>
+        <h4 className="text-lg font-medium">{CaptainDetails?.fullname?.firstname}</h4>
       </div>
       <div>
         <h4 className="text-xl font-semibold">₹193.22</h4>

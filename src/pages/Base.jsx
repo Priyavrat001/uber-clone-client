@@ -9,11 +9,15 @@ import WaitingForDriver from '../components/WaitingForDriver';
 import { getDestence, getSuggestedLoctions } from '../features/map/mapSlice';
 import { getFarePrice, createNewRide } from '../features/ride/rideSlice';
 import {toast} from "react-hot-toast";
+import { useSocket } from '../config/SocketContext';
 
 const Base = () => {
 
   const { map, error:mapError, loading:mapLoading } = useSelector(state => state.map);
   const { fares, newRide, loading, error } = useSelector(state => state.ride);
+  const {user} = useSelector((state)=>state.user);
+
+  const socket = useSocket();
 
   const suggestions = map.suggestions || [];
 
@@ -27,6 +31,7 @@ const Base = () => {
   const [vehicleFound, setVehicleFound] = useState(false);
   const [driverFound, setDriverFound] = useState(false);
   const [activeField, setActiveField] = useState('pickup');
+  const [vechicleType, setVechicleType] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,13 +64,22 @@ const Base = () => {
     };
 
     if(error.faresError){
-      toast.error(error.message || "Something went wrong!");
+      toast.error(error.faresError.message || "Something went wrong!");
       return;
+    }else{
+      toast.success("Fare price genrated");
+    };
+
+    if(error.newRideError){
+      toast.error(error.newRideError.message || "Something went wrong");
+      return;
+    }else{
+      toast.success("Ride created successfully");
     }
   };
 
 
-  const createARide = async(vechicleType)=>{
+  const createARide = async()=>{
     const rideData = {
       pickUp,
       destination,
@@ -83,6 +97,11 @@ const Base = () => {
     console.log(newRide)
   };
 
+  useEffect(() => {
+  if(user?.user?._id){
+    socket.emit("join", {userType:"user", userId:user.user._id});
+  }
+  }, [socket])
   
 
   return (
@@ -209,9 +228,10 @@ const Base = () => {
           setConfirmVehicel={setConfirmVehicel}
           coordinates={map.coordinates}
           fares={fares}
+          createARide={createARide}
         />
       </motion.div>
-      <SelectCar vehiclePanelOpen={vehiclePanelOpen} setVehiclePanelOpen={setVehiclePanelOpen} confirmVehicel={confirmVehicel} setConfirmVehicel={setConfirmVehicel} fares={fares} duration={map.duration} createARide={createARide}/>
+      <SelectCar vehiclePanelOpen={vehiclePanelOpen} setVehiclePanelOpen={setVehiclePanelOpen} confirmVehicel={confirmVehicel} setConfirmVehicel={setConfirmVehicel} fares={fares} duration={map.duration} setVechicleType={setVechicleType}/>
     </div>
   )
 }

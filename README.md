@@ -13,6 +13,12 @@ This is a React-based frontend for an Uber-like ride-hailing application. Users 
 - Protected routes for user and captain dashboards
 - Responsive and modern UI with Tailwind CSS
 - Toast notifications for user feedback
+- Dual-field location suggestion/search (pickup & destination) with active field tracking
+- Live fare price calculation for all vehicle types, fetched from backend
+- Modern, animated UI for all main and nested components using Framer Motion
+- Improved ride booking flow: animated panels, vehicle selection, and fare display
+- Consistent Redux state management for fares, loading, and errors
+- Robust error handling and user feedback for fare fetching and location search
 
 ## Packages & Technologies Used
 - **React** — UI library for building the app
@@ -22,6 +28,7 @@ This is a React-based frontend for an Uber-like ride-hailing application. Users 
 - **Tailwind CSS** — Utility-first CSS framework for styling
 - **Remixicon** — Icon library
 - **React Hot Toast** — Toast notifications
+- **Framer Motion** — Animations and transitions
 - **Vite** — Fast development server and build tool
 
 ## Getting Started
@@ -34,13 +41,6 @@ This is a React-based frontend for an Uber-like ride-hailing application. Users 
    npm run dev
    ```
 3. The app will be available at `http://localhost:5173` by default.
-
-## Folder Structure
-- `src/pages/` — Main pages (Home, Login, Signup, Riding, etc.)
-- `src/components/` — Reusable UI components (location search, car selection, ride status, etc.)
-- `src/features/` — Redux slices for user and captain state
-- `src/config/` — App configuration
-- `src/assets/` — Images and icons
 
 ## Project File Structure
 
@@ -166,7 +166,7 @@ For more details, see the `Base.jsx` page and the `LocationSearch.jsx` component
 
 ## All Project Files
 
-Below is a list of all files and folders in the `client/` directory as of June 11, 2025. This can help with onboarding, debugging, and understanding the project structure.
+Below is a list of all files and folders in the `client/` directory as of June 13, 2025. This can help with onboarding, debugging, and understanding the project structure.
 
 ```
 client/

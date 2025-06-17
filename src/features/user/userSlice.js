@@ -5,7 +5,7 @@ import { server } from "../../config/server";
 // Async Thunks
 const getUser = createAsyncThunk("user/fetchUser", async (_, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${server}/user/me`, { withCredentials: true });
+        const response = await axios.get(`${server}/api/v1/user/me`, { withCredentials: true });
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || "Failed to fetch user");
@@ -14,7 +14,7 @@ const getUser = createAsyncThunk("user/fetchUser", async (_, { rejectWithValue }
 
 const logoutUser = createAsyncThunk("user/logoutUser", async (_, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${server}/user/logout`, { withCredentials: true });
+        const response = await axios.get(`${server}/api/v1/user/logout`, { withCredentials: true });
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || "Logout failed");
@@ -23,7 +23,7 @@ const logoutUser = createAsyncThunk("user/logoutUser", async (_, { rejectWithVal
 
 const newUser = createAsyncThunk("user/newUser", async (userData, { rejectWithValue }) => {
     try {
-        const response = await axios.post(`${server}/user/new`, userData, { withCredentials: true });
+        const response = await axios.post(`${server}/api/v1/user/new`, userData, { withCredentials: true });
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || "Signup failed");
@@ -32,7 +32,7 @@ const newUser = createAsyncThunk("user/newUser", async (userData, { rejectWithVa
 
 const loginUser = createAsyncThunk("user/loginUser", async (userData, { rejectWithValue }) => {
     try {
-        const response = await axios.post(`${server}/user/login`, userData, { withCredentials: true });
+        const response = await axios.post(`${server}/api/v1/user/login`, userData, { withCredentials: true });
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || "Login failed");
