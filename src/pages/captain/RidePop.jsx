@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 
-const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp, ride}) => {
+const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp, ride, confirmRide}) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -47,6 +47,7 @@ const RidePop = ({setRidePopUpPanel, setConfirmRidePopUp, ride}) => {
           <button onClick={()=> {
             setConfirmRidePopUp(true)
             setRidePopUpPanel(false)
+            confirmRide()
           }} className='w-full mt-5 bg-green-600 text-white font-semibold px-3 rounded-lg py-4 text-center'>Accept</button>
         </div>
         <div>

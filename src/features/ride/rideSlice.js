@@ -25,18 +25,32 @@ const createNewRide = createAsyncThunk("ride/createNewRide", async (rideData, { 
     }
 });
 
+const userRideCOnfirm = createAsyncThunk("ride/confirmRide", async ({rideId}, { rejectWithValue }) => {
+    try {
+        const response = await axios.post(`${server}/api/v1/ride/confirm-ride`, {rideId},{
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data?.message || "Failed to Create a ride");
+    }
+});
+
 const rideSlice = createSlice({
     name: "ride",
     initialState: {
         fares: null,
         newRide:null,
+        rideConfirm:null,
         loading: {
             faresLoading:false,
-            newRideLoading:false
+            newRideLoading:false,
+            rideConfirmLoading:false
         },
         error: {
             faresError:null,
-            newRideError:null
+            newRideError:null,
+            rideConfirmError:null
         },
     },
     reducers: {},
@@ -65,14 +79,29 @@ const rideSlice = createSlice({
                 state.newRide = action.payload.ride;
             })
             .addCase(createNewRide.rejected, (state, action) => {
-                state.loading = false;
+                state.loading.newRideLoading = false;
                 state.error.newRideError = action.payload;
-            });
+            })
+            
+            //confirm ride
+            .addCase(userRideCOnfirm.pending, (state) => {
+                state.loading.rideConfirmLoading = true;
+                state.error.rideConfirmError = null;
+            })
+            .addCase(userRideCOnfirm.fulfilled, (state, action) => {
+                state.loading.rideConfirmLoading = false;
+                state.rideConfirm = action.payload.ride;
+            })
+            .addCase(userRideCOnfirm.rejected, (state, action) => {
+                state.loading.rideConfirmLoading = false;
+                state.error.rideConfirmError = action.payload;
+            })
     },
 });
 
 export { 
     getFarePrice,
     createNewRide,
+    userRideCOnfirm
  };
 export default rideSlice.reducer;

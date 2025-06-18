@@ -4,13 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import CaptainDetails from "../../components/captain/CaptainDetails";
 import RidePop from "./RidePop";
 import ConfirmRide from "../../components/captain/ConfirmRide";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSocket } from "../../config/SocketContext";
+import { userRideCOnfirm } from "../../features/ride/rideSlice";
 
 const CaptainHome = () => {
 
  const {captainDetails} = useSelector(state=> state.captain);
- const socket = useSocket()
+ const socket = useSocket();
+
+ const dispatch = useDispatch();
 
 
   const [ridePopUpPanel, setRidePopUpPanel] = useState(false);
@@ -64,7 +67,11 @@ socket.on("new-ride", (data)=>{
   console.log(data);
   setRide(data);
   setRidePopUpPanel(true);
-})
+});
+
+const confirmRide = () => {
+ dispatch(userRideCOnfirm({rideId:ride._id}))
+}
 
   
   return (
@@ -101,6 +108,7 @@ socket.on("new-ride", (data)=>{
               setRidePopUpPanel={setRidePopUpPanel}
               setConfirmRidePopUp={setConfirmRidePopUp}
               ride={ride}
+              confirmRide={confirmRide}
             />
           )}
           {confirmRidePopUp && (

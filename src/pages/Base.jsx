@@ -31,7 +31,8 @@ const Base = () => {
   const [vehicleFound, setVehicleFound] = useState(false);
   const [driverFound, setDriverFound] = useState(false);
   const [activeField, setActiveField] = useState('pickup');
-  const [vechicleType, setVechicleType] = useState("")
+  const [vechicleType, setVechicleType] = useState("");
+  const [confirmRIdeData, setConfirmRideData] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -93,15 +94,23 @@ const Base = () => {
     if(error){
       toast.error(error.message || "Unable to create a new ride");
     };
-    console.log(vechicleType)
-    console.log(newRide)
   };
 
   useEffect(() => {
   if(user?.user?._id){
     socket.emit("join", {userType:"user", userId:user.user._id});
   }
-  }, [socket])
+  }, [socket]);
+
+
+  socket.on("ride-confirmed", (data)=>{
+    console.log(data);
+
+    setConfirmRideData(data);
+
+    setDriverFound(true);
+    setVehicleFound(false);
+  })
   
 
   return (
@@ -210,7 +219,7 @@ const Base = () => {
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <WaitingForDriver coordinates={map?.coordinates} fares={fares}/>
+            <WaitingForDriver coordinates={map?.coordinates} fares={fares} confirmRIdeData={confirmRIdeData}/>
           </motion.div>
         )}
       </AnimatePresence>

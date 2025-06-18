@@ -17,8 +17,13 @@ This is a React-based frontend for an Uber-like ride-hailing application. Users 
 - Live fare price calculation for all vehicle types, fetched from backend
 - Modern, animated UI for all main and nested components using Framer Motion
 - Improved ride booking flow: animated panels, vehicle selection, and fare display
-- Consistent Redux state management for fares, loading, and errors
+- Consistent Redux state management for fares, loading, and errors (feature-specific loading/error states)
 - Robust error handling and user feedback for fare fetching and location search
+- All API endpoints now use `/api/v1` prefix for consistency with backend
+- Socket.IO integration for real-time ride and location updates (see `src/config/SocketContext.jsx`)
+- Captain dashboard: live geolocation and location updates via Socket.IO
+- Enhanced vehicle selection and confirmation logic
+- Improved ride popups and confirmation flows
 
 ## Packages & Technologies Used
 - **React** — UI library for building the app
@@ -29,6 +34,7 @@ This is a React-based frontend for an Uber-like ride-hailing application. Users 
 - **Remixicon** — Icon library
 - **React Hot Toast** — Toast notifications
 - **Framer Motion** — Animations and transitions
+- **Socket.IO Client** — Real-time communication
 - **Vite** — Fast development server and build tool
 
 ## Getting Started
@@ -51,7 +57,7 @@ client/
     assets/              # Images and icons
     components/          # Reusable UI components (location search, car selection, ride status, etc.)
       captain/           # Captain-specific components
-    config/              # App configuration files
+    config/              # App configuration files and SocketContext
     features/            # Redux slices for user, captain, map, and ride state
       captain/
       map/
@@ -135,26 +141,23 @@ For more details, see the `Base.jsx` page and the `LocationSearch.jsx` component
 
 ## Recent Improvements & Advanced Features
 
-- **Dual-Field Location Suggestion/Search:**
-  - Both pickup and destination fields now support live location suggestions.
-  - The UI tracks which field is active, ensuring suggestions are context-aware and user-friendly.
-  - Suggestions are fetched and displayed in real-time as the user types, for both fields.
-
-- **Live Fare Price Calculation:**
-  - Fare prices for all vehicle types (bike, auto, car) are fetched from the backend based on the selected pickup and destination.
-  - The fare is displayed instantly after both locations are selected, providing transparency before booking.
-  - Redux state manages fares, loading, and error states for a smooth experience.
-
-- **Modern, Animated UI:**
-  - All main and nested components (including ride panels, vehicle selection, and captain pages) use Framer Motion for smooth transitions and animations.
-  - The booking flow features animated panels for location selection, vehicle choice, and ride status updates.
-
-- **Improved Ride Booking Flow:**
-  - The UI guides users through each step: location selection, vehicle selection, fare confirmation, and ride status.
-  - Vehicle selection and fare confirmation are visually appealing and accessible.
-
-- **Robust Error Handling:**
-  - Errors in fare fetching or location search are handled gracefully, with user feedback and alerts.
+- **All API endpoints now use `/api/v1` prefix:**
+  - All Redux slices and API calls have been updated to use the `/api/v1` prefix for consistency with backend routes.
+- **Redux slice improvements:**
+  - Loading and error states are now managed per feature (fares, new ride, ride confirmation, etc.).
+  - State structure is more robust and scalable for future features.
+- **Socket.IO integration:**
+  - Socket.IO client is set up and used for real-time ride and location updates.
+  - Captain dashboard emits live geolocation updates to backend.
+  - See `src/config/SocketContext.jsx` for implementation details.
+- **UI/UX enhancements:**
+  - Improved ride booking flow, vehicle selection, and fare display.
+  - All main and nested components use Framer Motion for smooth transitions.
+  - Error handling and user feedback are more robust and user-friendly.
+  - Ride popups and confirmation flows are more interactive and reliable.
+- **Captain dashboard:**
+  - Joins a room and emits location updates using Socket.IO and browser geolocation API.
+  - Receives and handles ride requests in real time.
 
 ---
 
@@ -166,7 +169,7 @@ For more details, see the `Base.jsx` page and the `LocationSearch.jsx` component
 
 ## All Project Files
 
-Below is a list of all files and folders in the `client/` directory as of June 13, 2025. This can help with onboarding, debugging, and understanding the project structure.
+Below is a list of all files and folders in the `client/` directory as of June 18, 2025. This can help with onboarding, debugging, and understanding the project structure.
 
 ```
 client/
@@ -203,6 +206,7 @@ client/
         FinishRide.jsx
     config/
       server.js
+      SocketContext.jsx
       syle.js
     features/
       captain/
