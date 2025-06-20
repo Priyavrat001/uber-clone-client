@@ -10,6 +10,7 @@ import { getDestence, getSuggestedLoctions } from '../features/map/mapSlice';
 import { getFarePrice, createNewRide } from '../features/ride/rideSlice';
 import {toast} from "react-hot-toast";
 import { useSocket } from '../config/SocketContext';
+import { useNavigate } from 'react-router-dom';
 
 const Base = () => {
 
@@ -22,6 +23,7 @@ const Base = () => {
   const suggestions = map.suggestions || [];
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [pickUp, setPickUp] = useState("");
   const [destination, setDestination] = useState("");
@@ -63,20 +65,6 @@ const Base = () => {
     if(pickUp && destination){
       dispatch(getDestence({origin:pickUp, destination}))
     };
-
-    if(error.faresError){
-      toast.error(error.faresError.message || "Something went wrong!");
-      return;
-    }else{
-      toast.success("Fare price genrated");
-    };
-
-    if(error.newRideError){
-      toast.error(error.newRideError.message || "Something went wrong");
-      return;
-    }else{
-      toast.success("Ride created successfully");
-    }
   };
 
 
@@ -104,14 +92,19 @@ const Base = () => {
 
 
   socket.on("ride-confirmed", (data)=>{
-    console.log(data);
-
-    setConfirmRideData(data);
+  
+    setConfirmRideData(data?.captain);
 
     setDriverFound(true);
     setVehicleFound(false);
+  });
+
+  socket.on("ride-started", (data)=>{
+    console.log(data);
+
+    setDriverFound(false);
+    navigate("/riding");
   })
-  
 
   return (
     <div className='m-h-screen relative overflow-hidden'>
@@ -219,7 +212,7 @@ const Base = () => {
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <WaitingForDriver coordinates={map?.coordinates} fares={fares} confirmRIdeData={confirmRIdeData}/>
+            <WaitingForDriver coordinates={map?.coordinates} fares={fares} confirmRIdeData={confirmRIdeData} newRide={newRide}/>
           </motion.div>
         )}
       </AnimatePresence>

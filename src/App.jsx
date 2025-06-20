@@ -25,13 +25,13 @@ const App = () => {
   const {captainDetails, loading:captainLoading, error:captainError} = useSelector(state=> state.captain);
 
   useEffect(() => {
-    if (!user && !loading && !error) {
+    if (!user && !loading) {
       dispatch(getUser());
     }
   }, [dispatch, user, loading, error]); 
 
   useEffect(()=>{
-    if(!captainDetails && !captainLoading && !captainError){
+    if(!captainDetails && !captainLoading){
       dispatch(getCaptain());
     }
   },[captainDetails, captainLoading, captainError]);

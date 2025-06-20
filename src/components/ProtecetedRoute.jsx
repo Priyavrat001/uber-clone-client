@@ -4,7 +4,7 @@ import LayoutLoading from './LayoutLoading';
 
 const UserProtecetedRoute = ({ user, loading, children }) => {
     if (loading) {
-        <LayoutLoading />
+        return <LayoutLoading />
     }
     if (!user) {
         return <Navigate to={"/user-login"} />
@@ -16,7 +16,7 @@ const UserProtecetedRoute = ({ user, loading, children }) => {
 const CaptainProtectedRoute = ({ captain, captainLoading, children }) => {
 
     if (captainLoading) {
-        <LayoutLoading />
+        return <LayoutLoading />
     };
 
     if (!captain) {

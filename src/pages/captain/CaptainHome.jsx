@@ -20,8 +20,6 @@ const CaptainHome = () => {
   const [confirmRidePopUp, setConfirmRidePopUp] = useState(false);
   const [ride, setRide] = useState("");
 
-
-
  useEffect(() => {
   let watchId;
 
@@ -64,7 +62,6 @@ const CaptainHome = () => {
 }, [captainDetails, socket]);
 
 socket.on("new-ride", (data)=>{
-  console.log(data);
   setRide(data);
   setRidePopUpPanel(true);
 });
@@ -112,7 +109,7 @@ const confirmRide = () => {
             />
           )}
           {confirmRidePopUp && (
-            <ConfirmRide setConfirmRidePopUp={setConfirmRidePopUp} setRidePopUpPanel={setRidePopUpPanel}/>
+            <ConfirmRide setConfirmRidePopUp={setConfirmRidePopUp} setRidePopUpPanel={setRidePopUpPanel} ride={ride} captainDetails={captainDetails}/>
           )}
         </motion.div>
       </AnimatePresence>

@@ -10,7 +10,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {error, loading, user} = useSelector((state)=>state.user);
+  const {user, loading, error} = useSelector((state)=>state.user);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,17 +32,16 @@ const Login = () => {
       toast.error(error);
     }
 
+
+    if(user){
+      navigate("/home")
+    }
+
     return ()=>{
       setEmail("");
       setPassword("");
     }
-  }, [error, dispatch]);
-
-  useEffect(() => {
-    if(user){
-      navigate("/home")
-    }
-  }, [user])
+  }, [error, dispatch, user]);
   
 
   return (

@@ -6,7 +6,7 @@ import { server } from "../../config/server";
 const getFarePrice = createAsyncThunk("ride/getFarePrice", async ({ pickUp, destination }, { rejectWithValue }) => {
     try {
         const response = await axios.get(`${server}/api/v1/ride/get-fare-price`, {
-            params: { pickUp, destination }, // FIX: use correct param names
+            params: { pickUp, destination },
             withCredentials: true
         });
         return response.data;
@@ -36,21 +36,35 @@ const userRideCOnfirm = createAsyncThunk("ride/confirmRide", async ({rideId}, { 
     }
 });
 
+const rideStarted = createAsyncThunk("ride/rideStarted", async ({rideId, captain, otp}, { rejectWithValue }) => {
+    try {
+        const response = await axios.post(`${server}/api/v1/ride/start-ride`, {rideId, captain, otp},{
+            withCredentials: true
+        });
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data?.message || "Failed to Create a ride");
+    }
+});
+
 const rideSlice = createSlice({
     name: "ride",
     initialState: {
         fares: null,
         newRide:null,
         rideConfirm:null,
+        rideStarted:null,
         loading: {
             faresLoading:false,
             newRideLoading:false,
-            rideConfirmLoading:false
+            rideConfirmLoading:false,
+            rideStartedLoading:false
         },
         error: {
             faresError:null,
             newRideError:null,
-            rideConfirmError:null
+            rideConfirmError:null,
+            rideStartedError:null
         },
     },
     reducers: {},
@@ -96,12 +110,27 @@ const rideSlice = createSlice({
                 state.loading.rideConfirmLoading = false;
                 state.error.rideConfirmError = action.payload;
             })
+
+            //ride started
+            .addCase(rideStarted.pending, (state) => {
+                state.loading.rideStartedLoading = true;
+                state.error.rideStartedError = null;
+            })
+            .addCase(rideStarted.fulfilled, (state, action) => {
+                state.loading.rideStartedLoading = false;
+                state.rideStarted = action.payload.ride;
+            })
+            .addCase(rideStarted.rejected, (state, action) => {
+                state.loading.rideStartedLoading = false;
+                state.error.rideStartedError = action.payload;
+            })
     },
 });
 
 export { 
     getFarePrice,
     createNewRide,
-    userRideCOnfirm
+    userRideCOnfirm,
+    rideStarted
  };
 export default rideSlice.reducer;

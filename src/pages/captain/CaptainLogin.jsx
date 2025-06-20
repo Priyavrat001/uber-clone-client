@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 const CaptainLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { captain, loading, error } = useSelector((state) => state.captain);
+  const { captainDetails, loading, error } = useSelector((state) => state.captain);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +37,7 @@ const CaptainLogin = () => {
       toast.error(error);
     }
 
-    if (captain) {
+    if (captainDetails) {
       navigate("/captain-home");
     }
 
@@ -45,7 +45,7 @@ const CaptainLogin = () => {
       setEmail("");
       setPassword("");
     };
-  }, [error, dispatch]);
+  }, [error, dispatch, captainDetails]);
 
   return (
     <motion.div
