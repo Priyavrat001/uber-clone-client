@@ -159,78 +159,23 @@ For more details, see the `Base.jsx` page and the `LocationSearch.jsx` component
   - Joins a room and emits location updates using Socket.IO and browser geolocation API.
   - Receives and handles ride requests in real time.
 
----
+## Recent Changes (June 20, 2025)
 
-## Notes
-- This project is for learning and demonstration purposes. It mimics some core Uber features but is not production-ready.
-- The backend server must be running for full functionality (see the `server/README.md`).
-
----
-
-## All Project Files
-
-Below is a list of all files and folders in the `client/` directory as of June 18, 2025. This can help with onboarding, debugging, and understanding the project structure.
-
-```
-client/
-  eslint.config.js
-  index.html
-  package.json
-  postcss.config.js
-  README.md
-  tailwind.config.js
-  vite.config.js
-  public/
-    vite.svg
-  src/
-    App.css
-    App.jsx
-    index.css
-    main.jsx
-    app/
-      store.js
-    assets/
-      home.jpg
-      react.svg
-    components/
-      ConfirmVehicel.jsx
-      LayoutLoading.jsx
-      LocationSearch.jsx
-      LookingForDriver.jsx
-      ProtecetedRoute.jsx
-      SelectCar.jsx
-      WaitingForDriver.jsx
-      captain/
-        CaptainDetails.jsx
-        ConfirmRide.jsx
-        FinishRide.jsx
-    config/
-      server.js
-      SocketContext.jsx
-      syle.js
-    features/
-      captain/
-        captainSlice.js
-      map/
-        mapSlice.js
-      ride/
-        rideSlice.js
-      user/
-        userSlice.js
-    pages/
-      Base.jsx
-      Home.jsx
-      Login.jsx
-      Riding.jsx
-      Signup.jsx
-      captain/
-        CaptainHome.jsx
-        CaptainLogin.jsx
-        CaptainRiding.jsx
-        CaptainSignup.jsx
-        RidePop.jsx
-```
-
-Each file and folder serves a specific purpose, as described in the earlier 'Project File Structure' section. For more details on any file, see the codebase or ask for a summary of its contents.
+- **Login & Redirect Improvements:**
+  - User and captain login flows now include OTP logic and redirect to the correct dashboard (`/home` or `/captain-home`) after successful login.
+  - Login pages provide better feedback and error handling.
+- **Protected Route Enhancements:**
+  - `ProtecetedRoute` now properly handles loading and redirect states for both user and captain, ensuring only authenticated users/captains can access protected pages.
+- **OTP & Ride Start Logic:**
+  - Added OTP input and validation in the captain's ride confirmation flow (`ConfirmRide.jsx`).
+  - New Redux async thunk `rideStarted` in `rideSlice.js` for starting rides with OTP.
+  - UI now displays OTP to the user and requires OTP entry by the captain to start the ride.
+- **Redux State Improvements:**
+  - `rideSlice` now manages `rideStarted` state and errors for the ride start process.
+  - Improved state management for ride confirmation and ride start flows.
+- **UI/UX Enhancements:**
+  - `WaitingForDriver` and `ConfirmRide` components now show OTP and relevant ride/captain details.
+  - Navigation and redirect logic improved after login and ride actions.
+  - Toast notifications and error messages are more robust and user-friendly.
 
 ---
